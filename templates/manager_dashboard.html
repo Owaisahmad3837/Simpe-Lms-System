@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Manager Dashboard</title>
+<style>
+    body {
+        margin: 0;
+        font-family: "Segoe UI", Arial, sans-serif;
+        background: linear-gradient(135deg, #eef2f7, #e3e9f3);
+    }
+
+    /* HEADER */
+    .header {
+        background: linear-gradient(135deg, #1f2a44, #2c3e50);
+        color: white;
+        padding: 20px;
+        text-align: center;
+        font-size: 24px;
+        font-weight: bold;
+        letter-spacing: 1px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+    }
+
+    /* LAYOUT */
+    .container {
+        display: flex;
+        min-height: 100vh;
+    }
+
+    /* SIDEBAR */
+    .sidebar {
+        width: 260px;
+        background: white;
+        padding: 25px 15px;
+        box-shadow: 4px 0 15px rgba(0,0,0,0.08);
+        border-right: 1px solid #eee;
+    }
+
+    .sidebar a {
+        display: block;
+        padding: 14px 15px;
+        margin: 10px 0;
+        cursor: pointer;
+        text-decoration: none;
+        color: #2c3e50;
+        font-weight: 600;
+        border-radius: 10px;
+        background: #f8f9fb;
+        transition: all 0.25s ease;
+    }
+
+    .sidebar a:hover {
+        background: #2c3e50;
+        color: white;
+        transform: translateX(6px);
+        box-shadow: 0 4px 10px rgba(44,62,80,0.3);
+    }
+
+    /* MAIN */
+    .main {
+        flex: 1;
+        padding: 30px;
+    }
+
+    /* CARD */
+    .card {
+        background: white;
+        padding: 30px;
+        margin-bottom: 20px;
+        border-radius: 18px;
+        display: none;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+        border: 1px solid #f0f0f0;
+        animation: fade 0.35s ease-in-out;
+    }
+
+    .active {
+        display: block;
+    }
+
+    @keyframes fade {
+        from { opacity: 0; transform: translateY(15px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* INPUTS */
+    input {
+        width: 100%;
+        padding: 12px;
+        margin: 8px 0;
+        border-radius: 8px;
+        border: 1px solid #ddd;
+        outline: none;
+        transition: 0.2s;
+        font-size: 14px;
+    }
+
+    input:focus {
+        border-color: #2c3e50;
+        box-shadow: 0 0 6px rgba(44,62,80,0.3);
+    }
+
+    /* BUTTON */
+    button {
+        padding: 12px;
+        background: #2c3e50;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: bold;
+        transition: 0.3s;
+        width: 100%;
+    }
+
+    button:hover {
+        background: #1a252f;
+        transform: translateY(-2px);
+    }
+
+    /* FORM LABELS LOOK */
+    form {
+        line-height: 1.8;
+    }
+
+    /* RESPONSIVE DESIGN */
+    @media (max-width: 768px) {
+        .container {
+            flex-direction: column;
+        }
+
+        .sidebar {
+            width: 100%;
+            display: flex;
+            overflow-x: auto;
+            gap: 10px;
+            padding: 10px;
+        }
+
+        .sidebar a {
+            flex: 1;
+            text-align: center;
+            white-space: nowrap;
+            font-size: 13px;
+            padding: 10px;
+        }
+
+        .main {
+            padding: 15px;
+        }
+
+        .card {
+            padding: 18px;
+        }
+    }
+</style>
+  <script>
+        function showSection(id) {
+            let sections = document.querySelectorAll(".card");
+            sections.forEach(s => s.classList.remove("active"));
+            document.getElementById(id).classList.add("active");
+        }
+    </script>
+</head>
+
+<body>
+
+<div class="header">
+    <h1>🏢 Manager Dashboard</h1>
+</div>
+
+<div class="container">
+
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+        <a onclick="showSection('home')">🏠 Home</a>
+        <a onclick="showSection('add_student')">➕ Add Student</a>
+        <a onclick="showSection('add_teacher')">➕ Add Teacher</a>
+        <a onclick="showSection('add_manager')">➕ Add Manager</a>
+        <a href="/logout">🚪 Logout</a>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div class="main">
+
+        <!-- HOME -->
+        <div id="home" class="card active">
+            <h2>Welcome Manager 👋</h2>
+            <p>You can manage all users from this panel.</p>
+        </div>
+
+        <!-- ADD STUDENT -->
+        <div id="add_student" class="card">
+            <h2>➕ Add Student</h2>
+
+            <form action="/add" method="POST">
+
+  <input type="hidden" name="user_type" value="student">
+  Name: <input name="name"><br><br>
+  Father Name: <input name="father_name"><br><br>
+  Age: <input name="age"><br><br>
+  DOB: <input name="date_of_birth"><br><br>
+  Contact: <input name="contact"><br><br>
+  Gender: <input name="gender"><br><br>
+
+  Email: <input name="email"><br><br>
+  Password: <input name="password"><br><br>
+
+  <button type="submit">Add Student</button>
+
+</form>
+        </div>
+
+        <!-- ADD TEACHER -->
+        <div id="add_teacher" class="card">
+            <h2>➕ Add Teacher</h2>
+
+            <form method="POST" action="/add_teacher">
+                  <input type="hidden" name="user_type" value="teacher">
+
+  Name: <input name="name"><br><br>
+  Father Name: <input name="father_name"><br><br>
+  Age: <input name="age"><br><br>
+  DOB: <input name="date_of_birth"><br><br>
+  Contact: <input name="contact"><br><br>
+  Gender: <input name="gender"><br><br>
+  Education: <input name="education"><br><br>
+
+  Email: <input name="email"><br><br>
+  Password: <input name="password"><br><br>
+
+  <button>Add Teacher</button>
+            </form>
+        </div>
+
+        <!-- ADD MANAGER -->
+        <div id="add_manager" class="card">
+            <h2>➕ Add Manager</h2>
+
+            <form method="POST" action="/add_manager">
+                <input type="text" name="name" placeholder="Manager Name">
+                <input type="email" name="email" placeholder="Email">
+                <button>Add Manager</button>
+            </form>
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>

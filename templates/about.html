@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>About LMS</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <style>
+
+  body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: #0b0f1a;
+    color: white;
+  }
+
+  /* HERO */
+  .about-hero {
+    padding: 100px 20px;
+    text-align: center;
+    background: radial-gradient(circle at top, #3b82f6, #0b0f1a);
+  }
+
+  .about-hero h1 {
+    font-size: 50px;
+    font-weight: 900;
+    background: linear-gradient(90deg,#3b82f6,#a855f7);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .about-hero p {
+    max-width: 700px;
+    margin: auto;
+    opacity: 0.8;
+    font-size: 17px;
+  }
+
+  /* SECTION */
+  .section {
+    padding: 60px 20px;
+  }
+
+  .glass-card {
+    background: rgba(255,255,255,0.05);
+    border-radius: 15px;
+    padding: 25px;
+    height: 100%;
+    backdrop-filter: blur(10px);
+    transition: 0.3s;
+  }
+
+  .glass-card:hover {
+    transform: translateY(-10px);
+    background: rgba(255,255,255,0.1);
+  }
+
+  /* STATS */
+  .stats {
+    text-align: center;
+    padding: 60px 20px;
+  }
+
+  .stat-box {
+    background: rgba(255,255,255,0.05);
+    padding: 30px;
+    border-radius: 15px;
+    transition: 0.3s;
+  }
+
+  .stat-box:hover {
+    transform: scale(1.05);
+  }
+
+  .number {
+    font-size: 40px;
+    font-weight: 900;
+    color: #3b82f6;
+  }
+
+  </style>
+</head>
+
+<body>
+
+{% include 'navbar.html' %}
+
+<!-- HERO -->
+<div class="about-hero">
+  <h1>About LMS System</h1>
+  <p>
+    A modern Learning Management System designed for Students, Teachers, and Admins to manage education digitally with speed, accuracy, and intelligence.
+  </p>
+</div>
+
+<!-- MISSION -->
+<div class="section container">
+  <div class="row g-4">
+
+    <div class="col-md-6">
+      <div class="glass-card">
+        <h3>🎯 Our Mission</h3>
+        <p>
+          To simplify education management using modern web technologies like Flask, PostgreSQL, and data analytics.
+          We aim to make academic systems smart and automated.
+        </p>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="glass-card">
+        <h3>🚀 Our Vision</h3>
+        <p>
+          To build a fully digital university system where attendance, marks, and performance are tracked in real-time using data engineering.
+        </p>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- STATS -->
+<div class="stats container">
+  <div class="row g-4">
+
+    <div class="col-md-4">
+      <div class="stat-box">
+        <div class="number">500+</div>
+        <p>Students Managed</p>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="stat-box">
+        <div class="number">50+</div>
+        <p>Teachers Connected</p>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="stat-box">
+        <div class="number">10K+</div>
+        <p>Records Processed</p>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div class="text-center p-4" style="opacity:0.6;">
+  © 2026 LMS System | Built by Owais Ahmad
+</div>
+
+</body>
+</html>

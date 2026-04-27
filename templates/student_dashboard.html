@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Dashboard</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: "Segoe UI", Arial, sans-serif;
+            background: linear-gradient(135deg, #eef2f7, #e3e9f3);
+        }
+
+        /* HEADER */
+        .header {
+            background: linear-gradient(135deg, #1f2a44, #2c3e50);
+            color: white;
+            padding: 18px;
+            text-align: center;
+            font-size: 22px;
+            font-weight: bold;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
+        /* LAYOUT */
+        .container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* SIDEBAR */
+        .sidebar {
+            width: 250px;
+            background: white;
+            padding: 20px;
+            box-shadow: 4px 0 15px rgba(0,0,0,0.08);
+        }
+
+        .sidebar a {
+            display: block;
+            padding: 12px;
+            margin: 10px 0;
+            cursor: pointer;
+            text-decoration: none;
+            color: #2c3e50;
+            font-weight: 600;
+            border-radius: 10px;
+            background: #f5f7fa;
+            transition: 0.3s;
+        }
+
+        .sidebar a:hover {
+            background: #2c3e50;
+            color: white;
+            transform: translateX(5px);
+        }
+
+        /* MAIN */
+        .main {
+            flex: 1;
+            padding: 25px;
+        }
+
+        /* CARD */
+        .card {
+            background: white;
+            padding: 25px;
+            border-radius: 16px;
+            display: none;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+            animation: fade 0.3s ease;
+        }
+
+        .active {
+            display: block;
+        }
+
+        @keyframes fade {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* TABLE */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        th {
+            background: #2c3e50;
+            color: white;
+            padding: 12px;
+        }
+
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #eee;
+        }
+
+        tr:hover {
+            background: #f5f7fa;
+        }
+
+        /* PROFILE CARD */
+        .profile-box {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .profile-item {
+            background: #f5f7fa;
+            padding: 12px;
+            border-radius: 10px;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                display: flex;
+                overflow-x: auto;
+                gap: 10px;
+            }
+
+            .sidebar a {
+                flex: 1;
+                text-align: center;
+                white-space: nowrap;
+            }
+
+            .main {
+                padding: 15px;
+            }
+
+            .profile-box {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+
+    <script>
+        function showSection(id) {
+            let sections = document.querySelectorAll(".card");
+            sections.forEach(s => s.classList.remove("active"));
+            document.getElementById(id).classList.add("active");
+        }
+    </script>
+</head>
+
+<body>
+
+<div class="header">
+    🎓 Student Dashboard
+</div>
+
+<div class="container">
+
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+        <a onclick="showSection('home')">👤 Profile</a>
+        <a onclick="showSection('courses')">📚 Courses</a>
+        <a onclick="showSection('marks')">📊 Marks</a>
+        <a onclick="showSection('attendance')">🧾 Attendance</a>
+        <a href="/logout">🚪 Logout</a>
+    </div>
+
+    <!-- MAIN -->
+    <div class="main">
+
+        <!-- PROFILE -->
+        <div id="home" class="card active">
+            <h2>👤 Student Profile</h2>
+
+            <div class="profile-box">
+                <div class="profile-item"><b>ID:</b> {{ student[0] }}</div>
+                <div class="profile-item"><b>Name:</b> {{ student[1] }}</div>
+                <div class="profile-item"><b>Father:</b> {{ student[2] }}</div>
+                <div class="profile-item"><b>Contact:</b> {{ student[3] }}</div>
+                <div class="profile-item"><b>Gender:</b> {{ student[4] }}</div>
+            </div>
+        </div>
+
+        <!-- COURSES -->
+        <div id="courses" class="card">
+            <h2>📚 My Courses</h2>
+            <table>
+                <tr><th>ID</th><th>Name</th></tr>
+                {% for c in courses %}
+                <tr>
+                    <td>{{ c[0] }}</td>
+                    <td>{{ c[1] }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+
+        <!-- MARKS -->
+        <div id="marks" class="card">
+            <h2>📊 My Marks</h2>
+            <table>
+                <tr>
+                    <th>Course</th>
+                    <th>Exam</th>
+                    <th>Obtained</th>
+                    <th>Total</th>
+                </tr>
+
+                {% for m in marks %}
+                <tr>
+                    <td>{{ m[0] }}</td>
+                    <td>{{ m[1] }}</td>
+                    <td>{{ m[2] }}</td>
+                    <td>{{ m[3] }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+
+        <!-- ATTENDANCE -->
+        <div id="attendance" class="card">
+            <h2>🧾 My Attendance</h2>
+            <table>
+                <tr>
+                    <th>Course</th>
+                    <th>Date</th>
+                    <th>Status</th>
+                </tr>
+
+                {% for a in attendance %}
+                <tr>
+                    <td>{{ a[0] }}</td>
+                    <td>{{ a[1] }}</td>
+                    <td>{{ a[2] }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>

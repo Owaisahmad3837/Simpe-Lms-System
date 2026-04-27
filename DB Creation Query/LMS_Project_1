@@ -1,0 +1,86 @@
+CREATE TABLE users
+(
+    user_id SERIAL PRIMARY KEY,
+    email TEXT UNIQUE NOT NULL,
+    password TEXT NOT NULL,
+    role TEXT CHECK (role IN ('student','teacher','admin','manager')) NOT NULL,
+    status TEXT DEFAULT 'active'
+);
+
+
+CREATE TABLE students
+(
+    student_id SERIAL PRIMARY KEY,
+    user_id INT UNIQUE REFERENCES users(user_id),
+    name TEXT NOT NULL,
+    father_name TEXT,
+    age INT,
+    date_of_birth DATE,
+    contact TEXT,
+    gender TEXT CHECK (gender IN ('male','female')),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE teachers
+(
+    teacher_id SERIAL PRIMARY KEY,
+    user_id INT UNIQUE REFERENCES users(user_id),
+    name TEXT NOT NULL,
+    father_name TEXT,
+    age INT,
+    date_of_birth DATE,
+    contact TEXT,
+    gender TEXT CHECK (gender IN ('male','female')),
+    education TEXT NOT NULL
+);
+
+
+CREATE TABLE departments
+(
+    department_id SERIAL PRIMARY KEY,
+    name TEXT NOT NULL UNIQUE
+);
+
+CREATE TABLE courses
+(
+    course_id SERIAL PRIMARY KEY,
+    name TEXT NOT NULL,
+    department_id INT REFERENCES departments(department_id)
+);
+
+CREATE TABLE enrollments
+(
+    enrollment_id SERIAL PRIMARY KEY,
+    student_id INT REFERENCES students(student_id),
+    course_id INT REFERENCES courses(course_id),
+    enrolled_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+
+
+CREATE TABLE attendance
+(
+    attendance_id SERIAL PRIMARY KEY,
+    student_id INT REFERENCES students(student_id),
+    course_id INT REFERENCES courses(course_id),
+    attendance_date DATE,
+    status TEXT CHECK (status IN ('present','absent'))
+);
+
+
+CREATE TABLE marks
+(
+    mark_id SERIAL PRIMARY KEY,
+    student_id INT REFERENCES students(student_id),
+    course_id INT REFERENCES courses(course_id),
+    exam_type TEXT CHECK (exam_type IN ('mid','final','presentation')),
+    marks_obtained INT,
+    total_marks INT
+);
+
+
+CREATE TABLE teacher_courses
+(
+    id SERIAL PRIMARY KEY,
+    teacher_id INT REFERENCES teachers(teacher_id),
+    course_id INT REFERENCES courses(course_id)
